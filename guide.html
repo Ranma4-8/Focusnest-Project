@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FocusNest — User Guide</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap">
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --bg:#0e1117;--surface:#171c25;--card:#1e2536;--border:#2a3146;
+      --accent:#7c9ef5;--accent2:#5dd8b3;--accent3:#f59e4a;
+      --text:#e8eaf6;--muted:#8892aa;--dim:#4a5270;
+    }
+    body{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--text);line-height:1.7;padding:0}
+    .wrap{max-width:780px;margin:0 auto;padding:2rem 1.5rem 4rem}
+
+    /* HEADER */
+    .guide-header{text-align:center;padding:3rem 0 2.5rem;border-bottom:1px solid var(--border);margin-bottom:2.5rem}
+    .guide-logo{font-family:'Playfair Display',serif;font-size:2rem;margin-bottom:.4rem}
+    .guide-logo span{color:var(--accent)}
+    .guide-sub{font-size:.9rem;color:var(--muted);letter-spacing:.04em}
+    .badge-row{display:flex;gap:.5rem;justify-content:center;margin-top:1rem;flex-wrap:wrap}
+    .pill{background:var(--card);border:1px solid var(--border);border-radius:20px;font-size:.72rem;padding:.25rem .75rem;color:var(--muted)}
+
+    /* TOC */
+    .toc{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.25rem 1.5rem;margin-bottom:2.5rem}
+    .toc-title{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.75rem}
+    .toc a{display:block;color:var(--accent);text-decoration:none;font-size:.88rem;padding:.2rem 0;transition:color .15s}
+    .toc a:hover{color:var(--text)}
+    .toc-num{color:var(--dim);font-family:'DM Mono',monospace;font-size:.78rem;margin-right:.5rem}
+
+    /* SECTIONS */
+    .section{margin-bottom:3rem}
+    h2{font-family:'Playfair Display',serif;font-size:1.35rem;margin-bottom:1.25rem;padding-bottom:.5rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:.6rem}
+    h2 .sec-num{font-family:'DM Mono',monospace;font-size:.8rem;color:var(--accent);background:rgba(124,158,245,.1);padding:.2rem .5rem;border-radius:6px}
+    h3{font-size:.95rem;font-weight:600;margin:1.25rem 0 .5rem;color:var(--accent2)}
+
+    p{font-size:.9rem;color:var(--muted);margin-bottom:.75rem}
+    p strong{color:var(--text)}
+
+    /* STEP CARDS */
+    .steps{display:flex;flex-direction:column;gap:.6rem}
+    .step{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:.9rem 1.1rem;display:flex;gap:.9rem;align-items:flex-start}
+    .step-num{background:var(--accent);color:#0e1117;font-family:'DM Mono',monospace;font-size:.75rem;font-weight:600;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:.1rem}
+    .step-body{font-size:.875rem;color:var(--muted);line-height:1.6}
+    .step-body strong{color:var(--text);display:block;margin-bottom:.15rem}
+
+    /* FEATURE CARDS */
+    .feature-grid{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+    .feat{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem}
+    .feat-icon{font-size:1.4rem;margin-bottom:.4rem}
+    .feat-name{font-size:.85rem;font-weight:600;margin-bottom:.25rem}
+    .feat-desc{font-size:.78rem;color:var(--muted);line-height:1.5}
+
+    /* BADGE TABLE */
+    .badge-table{width:100%;border-collapse:collapse;font-size:.85rem}
+    .badge-table th{text-align:left;font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding:.5rem .75rem;border-bottom:1px solid var(--border)}
+    .badge-table td{padding:.6rem .75rem;border-bottom:1px solid var(--border);color:var(--muted);vertical-align:middle}
+    .badge-table td:first-child{font-size:1.2rem;width:40px}
+    .badge-table td:nth-child(2){color:var(--text);font-weight:500}
+    .badge-table tr:last-child td{border-bottom:none}
+
+    /* TIP BOX */
+    .tip{background:rgba(124,158,245,.07);border:1px solid rgba(124,158,245,.2);border-radius:10px;padding:.9rem 1.1rem;font-size:.85rem;color:var(--muted);margin:.75rem 0;display:flex;gap:.7rem}
+    .tip-icon{font-size:1rem;flex-shrink:0;margin-top:.1rem}
+    .warn{background:rgba(245,158,74,.07);border-color:rgba(245,158,74,.2)}
+
+    /* KEYBOARD TABLE */
+    .key-table{width:100%;border-collapse:collapse;font-size:.85rem}
+    .key-table td{padding:.55rem .75rem;border-bottom:1px solid var(--border);color:var(--muted)}
+    .key-table td:first-child{color:var(--text)}
+    .key-table tr:last-child td{border-bottom:none}
+    kbd{background:var(--card);border:1px solid var(--border);border-radius:5px;font-family:'DM Mono',monospace;font-size:.75rem;padding:.15rem .4rem;color:var(--text)}
+
+    /* FOOTER */
+    .guide-footer{text-align:center;padding-top:2rem;border-top:1px solid var(--border);font-size:.78rem;color:var(--dim)}
+
+    @media print{
+      body{background:#fff;color:#111}
+      .toc,.tip,.step,.feat{border-color:#ddd;background:#f9f9f9}
+      .guide-logo span,.step-num,.toc a,.h3{color:#4466cc}
+      .guide-header,.section{break-inside:avoid}
+    }
+    @media(max-width:540px){
+      .feature-grid{grid-template-columns:1fr}
+      .wrap{padding:1.25rem 1rem 3rem}
+    }
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HEADER -->
+  <div class="guide-header">
+    <div class="guide-logo">Focus<span>Nest</span></div>
+    <div class="guide-sub">Complete User Guide</div>
+    <div class="badge-row">
+      <span class="pill">⏱ Pomodoro Timer</span>
+      <span class="pill">🎵 Ambient Audio</span>
+      <span class="pill">📊 Stats</span>
+      <span class="pill">🏆 Achievements</span>
+    </div>
+  </div>
+
+  <!-- TABLE OF CONTENTS -->
+  <div class="toc">
+    <div class="toc-title">Contents</div>
+    <a href="#what"><span class="toc-num">01</span>What is FocusNest?</a>
+    <a href="#timer"><span class="toc-num">02</span>Using the Timer</a>
+    <a href="#audio"><span class="toc-num">03</span>Ambient Sounds</a>
+    <a href="#stats"><span class="toc-num">04</span>Stats Dashboard</a>
+    <a href="#badges"><span class="toc-num">05</span>Achievements & Badges</a>
+    <a href="#settings"><span class="toc-num">06</span>Settings & Configuration</a>
+    <a href="#keyboard"><span class="toc-num">07</span>Keyboard Shortcuts</a>
+    <a href="#tips"><span class="toc-num">08</span>Tips & Best Practices</a>
+    <a href="#faq"><span class="toc-num">09</span>FAQ</a>
+  </div>
+
+  <!-- SECTION 1 -->
+  <div class="section" id="what">
+    <h2><span class="sec-num">01</span>What is FocusNest?</h2>
+    <p>FocusNest is a <strong>distraction-free study tool</strong> built for university students. It combines the Pomodoro technique with ambient sounds, progress tracking, and achievement badges — all in one lightweight app that works directly in your browser.</p>
+    <p><strong>No account needed. No installation. No distractions.</strong> Your data stays on your device.</p>
+
+    <div class="feature-grid">
+      <div class="feat"><div class="feat-icon">⏱</div><div class="feat-name">Pomodoro Timer</div><div class="feat-desc">Structured focus and break sessions to keep your mind fresh.</div></div>
+      <div class="feat"><div class="feat-icon">🎵</div><div class="feat-name">Ambient Sounds</div><div class="feat-desc">Rain, Café, or Forest — block out distractions with soothing loops.</div></div>
+      <div class="feat"><div class="feat-icon">📊</div><div class="feat-name">Study Stats</div><div class="feat-desc">Track daily and weekly focus time, session counts, and streaks.</div></div>
+      <div class="feat"><div class="feat-icon">🏆</div><div class="feat-name">Achievements</div><div class="feat-desc">Unlock badges as you build consistent study habits.</div></div>
+    </div>
+  </div>
+
+  <!-- SECTION 2 -->
+  <div class="section" id="timer">
+    <h2><span class="sec-num">02</span>Using the Timer</h2>
+    <p>The timer is the heart of FocusNest. It follows the <strong>Pomodoro Technique</strong> — work in focused bursts, then take short breaks to recharge.</p>
+
+    <h3>Starting your first session</h3>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><div class="step-body"><strong>Open the Timer tab</strong>It is selected by default when you open the app.</div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-body"><strong>Choose your mode</strong>Select Focus (25 min), Short Break (5 min), or Long Break (15 min) from the tabs at the top.</div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-body"><strong>Press Start</strong>The countdown begins and the ring animates as time passes.</div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-body"><strong>Work until the chime</strong>A three-note chime plays when your session ends. Take your break!</div></div>
+      <div class="step"><div class="step-num">5</div><div class="step-body"><strong>Repeat the cycle</strong>After every 4 focus sessions, a long break is triggered automatically.</div></div>
+    </div>
+
+    <h3>Timer controls</h3>
+    <div class="steps">
+      <div class="step"><div class="step-num">▶</div><div class="step-body"><strong>Start / Pause / Resume</strong>The main blue button. Tap once to start, again to pause, again to resume.</div></div>
+      <div class="step"><div class="step-num">↺</div><div class="step-body"><strong>Reset</strong>The left icon button. Resets the current session back to zero — does not count as a completed session.</div></div>
+      <div class="step"><div class="step-num">⏭</div><div class="step-body"><strong>Skip</strong>The right icon button. Moves to the next session type (Focus → Break or Break → Focus) without counting a completion.</div></div>
+    </div>
+
+    <div class="tip"><span class="tip-icon">💡</span><span>The timer uses your device's system clock, so it stays accurate even when the tab is minimised or your screen is off.</span></div>
+
+    <h3>Auto-transition</h3>
+    <p>Enable the <strong>Auto-transition sessions</strong> toggle to have FocusNest automatically start the next session after a short pause — no tapping needed.</p>
+
+    <h3>Session cycle</h3>
+    <p>FocusNest tracks your cycle automatically:</p>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><div class="step-body"><strong>Focus → Short Break → Focus → Short Break → Focus → Short Break → Focus → Long Break</strong> — then the cycle repeats. The four dots below the timer show your progress in the current cycle.</div></div>
+    </div>
+  </div>
+
+  <!-- SECTION 3 -->
+  <div class="section" id="audio">
+    <h2><span class="sec-num">03</span>Ambient Sounds</h2>
+    <p>Background audio helps mask distractions and signal your brain that it is time to focus. FocusNest generates all sounds locally — <strong>no streaming, no internet required after the page loads.</strong></p>
+
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><div class="step-body"><strong>🌧 Rain</strong>Steady white noise — ideal for deep concentration and blocking out office or café chatter.</div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-body"><strong>☕ Café</strong>Low ambient murmur with soft tones — good for creative work and mild background energy.</div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-body"><strong>🌲 Forest</strong>Gentle natural ambience with slow modulation — calming for reading and writing tasks.</div></div>
+    </div>
+
+    <h3>Controls</h3>
+    <p><strong>Tap any sound button</strong> to start playback. Tap it again to stop. Only one sound plays at a time. Use the <strong>volume slider</strong> to adjust independently of your device volume.</p>
+
+    <div class="tip warn"><span class="tip-icon">⚠️</span><span>On mobile (iOS Safari, Android Chrome), tap a sound button once after the page loads to start audio. This is a browser security requirement — audio cannot start automatically without a user tap.</span></div>
+
+    <h3>Chime mute</h3>
+    <p>Use the <strong>Session chime</strong> toggle in the audio panel to silence the end-of-session tone without affecting ambient sound. The two controls are fully independent.</p>
+  </div>
+
+  <!-- SECTION 4 -->
+  <div class="section" id="stats">
+    <h2><span class="sec-num">04</span>Stats Dashboard</h2>
+    <p>Tap <strong>Stats</strong> in the navigation to see your study history. Stats update automatically after every completed focus session.</p>
+
+    <div class="steps">
+      <div class="step"><div class="step-num">📅</div><div class="step-body"><strong>Today</strong>Total focus minutes and session count for today only.</div></div>
+      <div class="step"><div class="step-num">📆</div><div class="step-body"><strong>This Week</strong>Cumulative focus minutes and sessions over the last 7 days.</div></div>
+      <div class="step"><div class="step-num">🔥</div><div class="step-body"><strong>Day Streak</strong>How many consecutive days you have completed at least one focus session. Miss a day and the streak resets.</div></div>
+    </div>
+
+    <h3>Weekly chart</h3>
+    <p>The bar chart shows your focus minutes for each of the last 7 days. Hover over a bar to see the exact minutes.</p>
+
+    <h3>Recent sessions</h3>
+    <p>A log of your last 8 sessions showing the date, time, and duration of each one.</p>
+
+    <div class="tip"><span class="tip-icon">💡</span><span><strong>Only fully completed sessions count.</strong> If you reset the timer mid-session, it does not appear in your stats. Sessions where you pressed skip also do not count.</span></div>
+  </div>
+
+  <!-- SECTION 5 -->
+  <div class="section" id="badges">
+    <h2><span class="sec-num">05</span>Achievements & Badges</h2>
+    <p>Tap <strong>Badges</strong> in the navigation to see all achievements. Locked badges appear greyed out; unlocked badges show in full colour with a gold border.</p>
+    <p>When you earn a badge, a celebration animation plays and a toast notification appears within 5 seconds.</p>
+
+    <table class="badge-table">
+      <thead>
+        <tr><th></th><th>Badge</th><th>How to unlock</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>🌱</td><td>First Session</td><td>Complete your very first focus session</td></tr>
+        <tr><td>🦉</td><td>Night Owl</td><td>Complete a session after 10:00 PM</td></tr>
+        <tr><td>🌅</td><td>Early Bird</td><td>Complete a session before 7:00 AM</td></tr>
+        <tr><td>⚡</td><td>10 Sessions</td><td>Complete 10 focus sessions in total</td></tr>
+        <tr><td>⏱</td><td>2 Hours</td><td>Accumulate 2 hours of total focus time</td></tr>
+        <tr><td>🔥</td><td>5-Day Streak</td><td>Maintain a streak of 5 consecutive days</td></tr>
+        <tr><td>🧠</td><td>Deep Work</td><td>Complete 4 focus sessions in a single day</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- SECTION 6 -->
+  <div class="section" id="settings">
+    <h2><span class="sec-num">06</span>Settings & Configuration</h2>
+    <p>All settings are in the right panel on the Timer page. Changes take effect immediately.</p>
+
+    <h3>Session lengths</h3>
+    <div class="steps">
+      <div class="step"><div class="step-num">−+</div><div class="step-body"><strong>Focus</strong>Default 25 minutes. Adjust from 1–99 minutes. Standard Pomodoro is 25 min.</div></div>
+      <div class="step"><div class="step-num">−+</div><div class="step-body"><strong>Short Break</strong>Default 5 minutes. Take a real break — stand up, stretch, hydrate.</div></div>
+      <div class="step"><div class="step-num">−+</div><div class="step-body"><strong>Long Break</strong>Default 15 minutes. Triggered automatically after every 4 focus sessions.</div></div>
+    </div>
+
+    <div class="tip"><span class="tip-icon">💡</span><span>If you change a session length while the timer is stopped, it resets to the new duration. Changing it while running has no effect until the next session.</span></div>
+  </div>
+
+  <!-- SECTION 7 -->
+  <div class="section" id="keyboard">
+    <h2><span class="sec-num">07</span>Keyboard Shortcuts</h2>
+    <p>FocusNest supports full keyboard navigation. Use <kbd>Tab</kbd> to move between controls and <kbd>Enter</kbd> or <kbd>Space</kbd> to activate them.</p>
+
+    <table class="key-table">
+      <tr><td><kbd>Space</kbd></td><td>Start / Pause / Resume the timer</td></tr>
+      <tr><td><kbd>S</kbd></td><td>Skip to next session</td></tr>
+      <tr><td><kbd>R</kbd></td><td>Reset current session</td></tr>
+      <tr><td><kbd>Tab</kbd></td><td>Switch between Focus → Short Break → Long Break (cycles)</td></tr>
+      <tr><td><kbd>↑</kbd></td><td>Volume up (+5%)</td></tr>
+      <tr><td><kbd>↓</kbd></td><td>Volume down (−5%)</td></tr>
+    </table>
+
+    <div class="tip"><span class="tip-icon">💡</span><span>Shortcuts work anywhere on the page — no need to click first. They are disabled when typing in an input field.</span></div>
+  </div>
+
+  <!-- SECTION 8 -->
+  <div class="section" id="tips">
+    <h2><span class="sec-num">08</span>Tips & Best Practices</h2>
+
+    <h3>Getting the most from Pomodoro</h3>
+    <div class="steps">
+      <div class="step"><div class="step-num">✓</div><div class="step-body"><strong>Pick one task per session</strong>Write down what you want to achieve before pressing Start. Single-tasking beats multitasking every time.</div></div>
+      <div class="step"><div class="step-num">✓</div><div class="step-body"><strong>Actually take the break</strong>Step away from the screen during breaks. Your brain consolidates information when you rest.</div></div>
+      <div class="step"><div class="step-num">✓</div><div class="step-body"><strong>Build the streak</strong>Even one 25-minute session per day maintains your streak and compounds into significant study hours.</div></div>
+      <div class="step"><div class="step-num">✓</div><div class="step-body"><strong>Use ambient sound consistently</strong>Your brain associates the sound with focus over time — it becomes a ritual trigger.</div></div>
+    </div>
+
+    <h3>Data & privacy</h3>
+    <p>All your data — sessions, streaks, badges — is stored <strong>only on your device</strong> using browser localStorage. Nothing is sent to any server. If you clear your browser data or switch devices, your progress will reset.</p>
+
+    <div class="tip warn"><span class="tip-icon">⚠️</span><span>To preserve your progress, avoid clearing browser site data for focusnest. Using private/incognito mode will also mean data does not persist after closing the window.</span></div>
+  </div>
+
+  <!-- SECTION 9 -->
+  <div class="section" id="faq">
+    <h2><span class="sec-num">09</span>FAQ</h2>
+
+    <h3>The timer lost time when I switched tabs — is it broken?</h3>
+    <p>No. FocusNest uses your device's system clock, not a counting variable. When you return to the tab, the timer corrects itself instantly. It is accurate to within ±2 seconds over a full 25-minute session.</p>
+
+    <h3>Why is there no sound when I tap Rain/Café/Forest?</h3>
+    <p>On mobile browsers, audio requires a user gesture to start. Make sure you tap the sound button directly (not the page background). If it still does not work, try refreshing the page and tapping again.</p>
+
+    <h3>My stats disappeared — what happened?</h3>
+    <p>Stats are stored in your browser's localStorage. They are reset if you clear browser data, use a different browser, switch devices, or use private/incognito mode.</p>
+
+    <h3>Does FocusNest work offline?</h3>
+    <p>Yes — after the page first loads, FocusNest works entirely offline. The timer, audio, stats, and badges all function without an internet connection.</p>
+
+    <h3>Can I use FocusNest on my phone?</h3>
+    <p>Yes. FocusNest is mobile-first and works on iOS Safari (iOS 16+) and Android Chrome. The layout adapts from 360px mobile up to 1440px desktop.</p>
+
+    <h3>Why does my streak say 0 even though I studied yesterday?</h3>
+    <p>A streak requires at least one <strong>fully completed</strong> focus session per day. Sessions that were reset or skipped do not count. Check the Stats page to confirm yesterday has a session logged.</p>
+  </div>
+
+  <div class="guide-footer">
+    FocusNest — Built for focused students &nbsp;·&nbsp; All audio generated locally via Web Audio API &nbsp;·&nbsp; No trackers, no accounts, no distractions.
+  </div>
+
+</div>
+<div style="text-align:center;padding:1.5rem;font-size:.75rem;color:var(--nest-dim);border-top:1px solid var(--nest-border);margin-top:2rem">
+  Created by <a href="https://www.itwebinationsys.com/" target="_blank" rel="noopener" style="color:var(--nest-accent);text-decoration:none;transition:color .2s" onmouseover="this.style.color='var(--nest-text)'" onmouseout="this.style.color='var(--nest-accent)'">IT-Webination Systems</a>
+</div>
+</body>
+</html>
